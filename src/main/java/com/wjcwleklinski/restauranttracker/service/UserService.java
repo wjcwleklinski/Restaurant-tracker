@@ -22,4 +22,12 @@ public class UserService {
     public Iterable<User> findAll() {
         return userRepository.findAll();
     }
+
+    public void saveNewUser(User user) {
+        userRepository.save(user);
+    }
+
+    public boolean passwordsMatch(String password1, String password2) {
+        return password1.equals(password2);
+    }
 }

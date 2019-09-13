@@ -15,9 +15,4 @@ public class RestaurantTrackerApplication {
 		SpringApplication.run(RestaurantTrackerApplication.class, args);
 	}
 
-	@Bean
-	public Logger myLogger() {
-		return LoggerFactory.getLogger(this.getClass());
-	}
-
 }

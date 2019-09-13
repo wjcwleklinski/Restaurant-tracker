@@ -1,6 +1,10 @@
 package com.wjcwleklinski.restauranttracker.entity;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 
 @Entity
@@ -11,10 +15,15 @@ public class User {
     @Column(name = "user_id")
     private Long id;
 
+    @NotEmpty(message = "Please provide your username.")
     private String username;
 
+    @NotEmpty(message = "Please provide your password.")
+    @Length(min = 5, message = "Provide at least 5 characters.")
     private String password;
 
+    @NotEmpty(message = "Please provide your email.")
+    @Email(message = "Please provide correct email.")
     private String email;
 
     private int active;
@@ -70,4 +79,6 @@ public class User {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+
 }
