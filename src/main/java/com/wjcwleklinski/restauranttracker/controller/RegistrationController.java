@@ -56,10 +56,7 @@ public class RegistrationController {
         if(bindingResult.hasErrors())
             return "registration";
         else {
-            Set<Role> set = new HashSet<>();
-            set.add(roleService.findByName("USER"));
-            user.setRoles(set);
-            user.setActive(2);
+
             userService.saveNewUser(user);
         }
         return "registration";

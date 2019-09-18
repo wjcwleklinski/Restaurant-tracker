@@ -25,7 +25,7 @@
                             <a href="#" th:href="@{/home}">Home</a>
                         </li>
                         <li th:classappend="${module == 'rank' ? 'active' : ''}">
-                            <a href="#" th:href="@{/task}">Rank</a>
+                            <a href="#" th:href="@{/ranking}">Rank</a>
                         </li>
                     </ul>
 
@@ -39,7 +39,7 @@
                             <a href="/logout" th:href="@{#}" onclick="$('#form').submit();">
                                 <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;Log in
                             </a>
-                            <form style="visibility: hidden" id="form" method="post" action="#" th:action="@{/logout}"></form>
+                            <form style="visibility: hidden" id="form" method="get" action="#" th:action="@{/login}"></form>
                         </li>
                     </ul>
                 </div>
