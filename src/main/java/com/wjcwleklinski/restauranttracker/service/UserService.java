@@ -4,6 +4,7 @@ import com.wjcwleklinski.restauranttracker.entity.Role;
 import com.wjcwleklinski.restauranttracker.entity.User;
 import com.wjcwleklinski.restauranttracker.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,7 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    public User findByUserName(String name) {
+    public User findByUsername(String name) {
         return userRepository.findByUsername(name);
     }
 
@@ -48,4 +49,6 @@ public class UserService {
     public boolean passwordsMatch(String password1, String password2) {
         return password1.equals(password2);
     }
+
+
 }

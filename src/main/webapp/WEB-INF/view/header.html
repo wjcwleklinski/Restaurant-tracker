@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
     <head>
         <title>Registration</title>
@@ -30,16 +31,32 @@
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <a href="/signin" th:href="@{/registration}">
-                                <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;Sign in
-                            </a>
+                        <li class="list-group-item">
+                            <div sec:authorize="isAuthenticated()">
+<!--                                Logged as: <b th:inline="text"> [[${loggedUser}]] </b>-->
+                                Logged as: <p th:text="${session.loggedUser}"> </p>
+                            </div>
                         </li>
-                        <li>
-                            <a href="/logout" th:href="@{#}" onclick="$('#form').submit();">
-                                <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;Log in
-                            </a>
-                            <form style="visibility: hidden" id="form" method="get" action="#" th:action="@{/login}"></form>
+
+                        <li class="list-group-item">
+                            <div sec:authorize="isAnonymous()" >
+                                <a href="/registration" th:href="@{/registration}">
+                                    <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;Sign in
+                                </a>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div sec:authorize="isAnonymous()">
+                                <a href="/login" th:href="@{/login}" onclick="$('#form').submit();">
+                                    <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;Log in
+                                </a>
+                            </div>
+<!--                            <form style="visibility: hidden" id="form" method="get" action="#" th:action="@{/logout}"></form>-->
+                            <div sec:authorize="isAuthenticated()">
+                                <a href="/logout" th:href="@{/logout}" onclick="$('#form').submit();">
+                                    <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;Log out
+                                </a>
+                            </div>
                         </li>
                     </ul>
                 </div>
