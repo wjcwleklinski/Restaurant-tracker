@@ -25,38 +25,31 @@
                         <li th:classappend="${module == 'home' ? 'active' : ''}">
                             <a href="#" th:href="@{/home}">Home</a>
                         </li>
-                        <li th:classappend="${module == 'rank' ? 'active' : ''}">
-                            <a href="#" th:href="@{/ranking}">Rank</a>
+                        <li th:classappend="${module == 'ranking' ? 'active' : ''}">
+                            <a href="#" th:href="@{/ranking}">Ranking</a>
                         </li>
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="list-group-item">
-                            <div sec:authorize="isAuthenticated()">
-<!--                                Logged as: <b th:inline="text"> [[${loggedUser}]] </b>-->
-                                Logged as: <p th:text="${session.loggedUser}"> </p>
-                            </div>
+                        <li sec:authorize="isAuthenticated()">
+                            Logged as: <p th:text="${session.loggedUser}"> </p>
                         </li>
 
-                        <li class="list-group-item">
-                            <div sec:authorize="isAnonymous()" >
-                                <a href="/registration" th:href="@{/registration}">
-                                    <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;Sign in
-                                </a>
-                            </div>
+                        <li sec:authorize="isAnonymous()">
+                            <a href="/registration" th:href="@{/registration}">
+                                <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;Sign in
+                            </a>
                         </li>
-                        <li class="list-group-item">
-                            <div sec:authorize="isAnonymous()">
-                                <a href="/login" th:href="@{/login}" onclick="$('#form').submit();">
-                                    <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;Log in
-                                </a>
-                            </div>
+                        <li >
+                            <a sec:authorize="isAnonymous()" href="/login" th:href="@{/login}" onclick="$('#form').submit();">
+                                <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;Log in
+                            </a>
 <!--                            <form style="visibility: hidden" id="form" method="get" action="#" th:action="@{/logout}"></form>-->
-                            <div sec:authorize="isAuthenticated()">
-                                <a href="/logout" th:href="@{/logout}" onclick="$('#form').submit();">
-                                    <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;Log out
-                                </a>
-                            </div>
+
+                            <a sec:authorize="isAuthenticated()" href="/logout" th:href="@{/logout}" onclick="$('#form').submit();">
+                                <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;Log out
+                            </a>
+
                         </li>
                     </ul>
                 </div>
