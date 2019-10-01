@@ -1,8 +1,9 @@
-package com.wjcwleklinski.restauranttracker.retrofit;
+package com.wjcwleklinski.restauranttracker.retrofit.resources.zomato.cities;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
 /**
  * Request by city name
  */

@@ -1,14 +1,10 @@
 package com.wjcwleklinski.restauranttracker.controller;
 
 import com.wjcwleklinski.restauranttracker.entity.User;
-import com.wjcwleklinski.restauranttracker.retrofit.CityData;
 import com.wjcwleklinski.restauranttracker.service.UserService;
 import com.wjcwleklinski.restauranttracker.service.ZomatoService;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.security.Principal;
 
 @Controller
@@ -48,13 +43,13 @@ public class HomeController {
             logger.info("There is no logged in user");
         }
 
-        try {
-            CityData krakow = zomatoService.getCity("Krakow");
-            logger.warn(krakow.getLocationSuggestions().get(0).getName());
-        } catch (IOException e) {
-            logger.warn("error");
-            logger.warn(e.getMessage());
-        }
+//        try {
+//            CityData krakow = zomatoService.getCityData("Krakow");
+//            logger.warn(krakow.getLocationSuggestions().get(0).getName());
+//        } catch (IOException e) {
+//            logger.warn("error");
+//            logger.warn(e.getMessage());
+//        }
 
         modelAndView.setViewName("home");
         return modelAndView;

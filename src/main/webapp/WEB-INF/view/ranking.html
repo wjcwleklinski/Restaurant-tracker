@@ -13,13 +13,13 @@
     </div>
     <br>
     <br>
-        <h1>Restaurant ranking</h1>
+        <h1> Best rated restaurants nearby: [[${location}]]</h1>
         <table class="table table-hover">
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Name</th>
-                    <th scope="col">Description</th>
+                    <th scope="col">Cuisines</th>
                     <th scope="col">Address</th>
                     <th scope="col">Rating</th>
                 </tr>
@@ -27,10 +27,10 @@
             <tbody>
             <tr th:each="restaurant, iStat: ${restaurants}">
                 <td th:text="${iStat.index} +1" />
-                <td th:text="${restaurant.name}" />
-                <td th:text="${restaurant.description}" />
-                <td th:text="${restaurant.address}" />
-                <td th:text="${restaurant.rating}" />
+                <td th:text="${restaurant.getRestaurant().getName()}" />
+                <td th:text="${restaurant.getRestaurant().getCuisines()}" />
+                <td th:text="${restaurant.getRestaurant().getLocation().getAddress()}" />
+                <td th:text="${restaurant.getRestaurant().getUserRating().getAggregateRating()}" />
             </tr>
             </tbody>
         </table>

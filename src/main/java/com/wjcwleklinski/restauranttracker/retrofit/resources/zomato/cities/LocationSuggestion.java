@@ -1,4 +1,4 @@
-package com.wjcwleklinski.restauranttracker.retrofit;
+package com.wjcwleklinski.restauranttracker.retrofit.resources.zomato.cities;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

@@ -1,0 +1,31 @@
+package com.wjcwleklinski.restauranttracker.retrofit.resources.zomato.location_details.best_rated_restaurant.restaurant.user_rating;
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+public class BgColor {
+
+    @SerializedName("type")
+    @Expose
+    private String type;
+    @SerializedName("tint")
+    @Expose
+    private String tint;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getTint() {
+        return tint;
+    }
+
+    public void setTint(String tint) {
+        this.tint = tint;
+    }
+
+}
