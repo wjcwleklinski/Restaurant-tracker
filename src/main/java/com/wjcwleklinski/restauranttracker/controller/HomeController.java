@@ -1,6 +1,9 @@
 package com.wjcwleklinski.restauranttracker.controller;
 
 import com.wjcwleklinski.restauranttracker.entity.User;
+import com.wjcwleklinski.restauranttracker.retrofit.resources.ifconfig.IfconfigData;
+import com.wjcwleklinski.restauranttracker.retrofit.resources.zomato.cities.LocationSuggestion;
+import com.wjcwleklinski.restauranttracker.service.IfconfigService;
 import com.wjcwleklinski.restauranttracker.service.UserService;
 import com.wjcwleklinski.restauranttracker.service.ZomatoService;
 import org.slf4j.Logger;
@@ -27,28 +30,28 @@ public class HomeController {
     @Autowired
     private ZomatoService zomatoService;
 
+    @Autowired
+    private IfconfigService ifconfigService;
+
     @RequestMapping(path = "/home")
     public ModelAndView homePage(HttpServletRequest request) {
         logger.info("Home page loaded");
         ModelAndView modelAndView = new ModelAndView();
-
-        // add username to session to display on header
-        try {
-            HttpSession session = request.getSession();
-            Principal principal = request.getUserPrincipal();
-            String loginEmail = principal.getName();
-            String username = userService.findByEmail(loginEmail).getUsername();
-            session.setAttribute("loggedUser", username);
-        } catch (Exception e) {
-            logger.info("There is no logged in user");
-        }
-
+//
+//
+//        // get user location city and add it to session
 //        try {
-//            CityData krakow = zomatoService.getCityData("Krakow");
-//            logger.warn(krakow.getLocationSuggestions().get(0).getName());
-//        } catch (IOException e) {
-//            logger.warn("error");
-//            logger.warn(e.getMessage());
+//            IfconfigData ifconfigData = ifconfigService.getIfconfigData();
+//
+//            String city = ifconfigData.getCity();
+//            String country = ifconfigData.getCountry(); // wrong - to accurate
+//
+//            session.setAttribute("city", city);
+//            session.setAttribute("country", country);
+//            logger.info(city);
+//        } catch (Exception e) {
+//            session.setAttribute("city", "City not found");
+//            session.setAttribute("country", "Country not found");
 //        }
 
         modelAndView.setViewName("home");

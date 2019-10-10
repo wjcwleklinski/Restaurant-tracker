@@ -13,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -29,30 +31,34 @@ public class RankingController {
     Logger logger;
 
     @GetMapping
-    public String ranking(Model model) {
+    public String ranking(Model model, HttpServletRequest request) {
 
-        try {
-            // get lat and lon
-            IfconfigData ifconfigData = ifconfigService.getIfconfigData();
-            double lon = ifconfigData.getLongitude();
-            double lat = ifconfigData.getLatitude();
-            // get city name and id based on lat/lon
-            CityData cityData = zomatoService.getCityDataByLatLon(String.valueOf(lat), String.valueOf(lon));
-            LocationSuggestion firstSuggestion = cityData.getLocationSuggestions().stream().findFirst().get();
-            String cityName = firstSuggestion.getName();
-            String countryName = firstSuggestion.getCountryName();
-            int cityId = firstSuggestion.getId();
-            model.addAttribute("location", cityName + ", " + countryName);
-
-            // get best rated restaurants based on city id
-            LocationDetails ld = zomatoService.getLocationDetailsById(String.valueOf(cityId));
-            List<BestRatedRestaurant> restaurants = ld.getBestRatedRestaurant();
-            model.addAttribute("restaurants", restaurants);
-
-        } catch (IOException e) {
-            logger.warn("Unable to get location");
-            model.addAttribute("location", "Not found");
-        }
+//        HttpSession session = request.getSession();
+//        try {
+//            // get lat and lon
+////            IfconfigData ifconfigData = ifconfigService.getIfconfigData();
+////            double lon = ifconfigData.getLongitude();
+////            double lat = ifconfigData.getLatitude();
+////            // get city name and id based on lat/lon
+////            CityData cityData = zomatoService.getCityDataByLatLon(String.valueOf(lat), String.valueOf(lon));
+////            LocationSuggestion firstSuggestion = cityData.getLocationSuggestions().stream().findFirst().get();
+////            String cityName = firstSuggestion.getName();
+////            String countryName = firstSuggestion.getCountryName();
+////            int cityId = firstSuggestion.getId();
+////            model.addAttribute("location", cityName + ", " + countryName);
+//
+//            // get best rated restaurants based on city id
+//            int cityId = zomatoService
+//                    .getCityDataByName((String) session.getAttribute("city"))
+//                    .getLocationSuggestions().stream().findFirst().get().getId();
+//            LocationDetails ld = zomatoService.getLocationDetailsById(String.valueOf(cityId));
+//            List<BestRatedRestaurant> restaurants = ld.getBestRatedRestaurant();
+//            model.addAttribute("restaurants", restaurants);
+//
+//        } catch (IOException e) {
+//            logger.warn("Unable to get location");
+//            model.addAttribute("location", "Not found");
+//        }
         return "ranking";
     }
 }

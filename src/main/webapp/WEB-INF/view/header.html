@@ -22,19 +22,27 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li th:classappend="${module == 'home' ? 'active' : ''}">
+                        <li>
                             <a href="#" th:href="@{/home}">Home</a>
                         </li>
-                        <li th:classappend="${module == 'ranking' ? 'active' : ''}">
-                            <a href="#" th:href="@{/ranking}">Ranking</a>
+                        <li>
+                            <a href="#" th:href="@{/explore}">Explore</a>
+                        </li>
+                        <li>
+                            <a href="#" th:href="@{/ranking}">Best rated</a>
                         </li>
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
-                        <li sec:authorize="isAuthenticated()">
-                            Logged as: <p th:text="${session.loggedUser}"> </p>
-                        </li>
+<!--                        <li sec:authorize="isAuthenticated()">-->
+<!--                            Logged as: <p th:text="${session.loggedUser}"> </p>-->
+<!--                        </li>-->
 
+                        <li sec:authorize="isAuthenticated()">
+                            <a href="/user" th:href="@{/user}">
+                                <span class="glyphicon" aria-hidden="true"></span> [[${session.loggedUser}]]
+                            </a>
+                        </li>
                         <li sec:authorize="isAnonymous()">
                             <a href="/registration" th:href="@{/registration}">
                                 <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;Sign in

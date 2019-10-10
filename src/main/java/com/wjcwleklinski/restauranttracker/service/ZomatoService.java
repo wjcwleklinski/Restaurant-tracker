@@ -3,6 +3,7 @@ package com.wjcwleklinski.restauranttracker.service;
 import com.wjcwleklinski.restauranttracker.api.ZomatoApi;
 import com.wjcwleklinski.restauranttracker.config.ZomatoConfig;
 import com.wjcwleklinski.restauranttracker.retrofit.resources.zomato.cities.CityData;
+import com.wjcwleklinski.restauranttracker.retrofit.resources.zomato.collections.CollectionsData;
 import com.wjcwleklinski.restauranttracker.retrofit.resources.zomato.location_details.LocationDetails;
 import okhttp3.OkHttpClient;
 import org.springframework.stereotype.Service;
@@ -48,6 +49,12 @@ public class ZomatoService {
                 .getLocationDetailsById(entityId, ZomatoConfig.ENTITY_TYPE, ZomatoConfig.API_KEY)
                 .execute();
 
+        return response.body();
+    }
+
+    public CollectionsData getCollectionsDataById(String cityId) throws IOException{
+
+        Response<CollectionsData> response = zomatoApi.getCollectionsDataByID(cityId, ZomatoConfig.API_KEY).execute();
         return response.body();
     }
 }
