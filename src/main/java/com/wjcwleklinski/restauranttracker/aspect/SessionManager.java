@@ -17,9 +17,10 @@ public class SessionManager {
     public void loginPointcut() {}
 
 
-
     @AfterReturning("loginPointcut()")
     public void addUsernameToSession() {
         logger.info("in aspect");
     }
+
+
 }

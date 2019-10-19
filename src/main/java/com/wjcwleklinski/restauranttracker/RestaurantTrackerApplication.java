@@ -12,6 +12,7 @@ import org.springframework.context.annotation.ComponentScan;
 public class RestaurantTrackerApplication {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(RestaurantTrackerApplication.class, args);
 	}
 

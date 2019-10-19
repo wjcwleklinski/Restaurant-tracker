@@ -6,6 +6,7 @@ import com.wjcwleklinski.restauranttracker.retrofit.resources.zomato.cities.Loca
 import com.wjcwleklinski.restauranttracker.service.IfconfigService;
 import com.wjcwleklinski.restauranttracker.service.UserService;
 import com.wjcwleklinski.restauranttracker.service.ZomatoService;
+import com.wjcwleklinski.restauranttracker.util.HttpResponseUtil;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
+import java.util.Collections;
 
 @Controller
 public class HomeController {
@@ -39,20 +41,8 @@ public class HomeController {
         ModelAndView modelAndView = new ModelAndView();
 //
 //
-//        // get user location city and add it to session
-//        try {
-//            IfconfigData ifconfigData = ifconfigService.getIfconfigData();
 //
-//            String city = ifconfigData.getCity();
-//            String country = ifconfigData.getCountry(); // wrong - to accurate
-//
-//            session.setAttribute("city", city);
-//            session.setAttribute("country", country);
-//            logger.info(city);
-//        } catch (Exception e) {
-//            session.setAttribute("city", "City not found");
-//            session.setAttribute("country", "Country not found");
-//        }
+        logger.info(HttpResponseUtil.getIp());
 
         modelAndView.setViewName("home");
         return modelAndView;
