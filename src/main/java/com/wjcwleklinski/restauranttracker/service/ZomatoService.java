@@ -18,8 +18,6 @@ public class ZomatoService {
 
     private ZomatoApi zomatoApi;
 
-
-
     public ZomatoService() {
         OkHttpClient client = new OkHttpClient();
         Retrofit retrofit = new Retrofit.Builder()

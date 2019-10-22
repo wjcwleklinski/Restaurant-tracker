@@ -1,9 +1,8 @@
 package com.wjcwleklinski.restauranttracker.controller;
 
 import com.wjcwleklinski.restauranttracker.entity.User;
-import com.wjcwleklinski.restauranttracker.retrofit.resources.ifconfig.IfconfigData;
-import com.wjcwleklinski.restauranttracker.retrofit.resources.zomato.cities.LocationSuggestion;
-import com.wjcwleklinski.restauranttracker.service.IfconfigService;
+import com.wjcwleklinski.restauranttracker.retrofit.resources.ipstack.IpStackData;
+import com.wjcwleklinski.restauranttracker.service.IpStackService;
 import com.wjcwleklinski.restauranttracker.service.UserService;
 import com.wjcwleklinski.restauranttracker.service.ZomatoService;
 import com.wjcwleklinski.restauranttracker.util.HttpResponseUtil;
@@ -16,9 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.security.Principal;
-import java.util.Collections;
 
 @Controller
 public class HomeController {
@@ -33,16 +29,22 @@ public class HomeController {
     private ZomatoService zomatoService;
 
     @Autowired
-    private IfconfigService ifconfigService;
+    private IpStackService ipStackService;
+
 
     @RequestMapping(path = "/home")
     public ModelAndView homePage(HttpServletRequest request) {
         logger.info("Home page loaded");
         ModelAndView modelAndView = new ModelAndView();
-//
-//
-//
-        logger.info(HttpResponseUtil.getIp());
+
+        String ip = HttpResponseUtil.getHardcodedIp();
+        logger.info(ip);
+        try {
+            IpStackData ipStackData = ipStackService.getDataByIp(ip);
+            logger.info(String.valueOf(ipStackData.getLatitude()));
+        } catch (Exception e) {
+            logger.warn("Unable to access ipstack data");
+        }
 
         modelAndView.setViewName("home");
         return modelAndView;
