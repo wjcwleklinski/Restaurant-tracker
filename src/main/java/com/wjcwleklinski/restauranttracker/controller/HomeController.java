@@ -37,14 +37,7 @@ public class HomeController {
         logger.info("Home page loaded");
         ModelAndView modelAndView = new ModelAndView();
 
-        String ip = HttpResponseUtil.getHardcodedIp();
-        logger.info(ip);
-        try {
-            IpStackData ipStackData = ipStackService.getDataByIp(ip);
-            logger.info(String.valueOf(ipStackData.getLatitude()));
-        } catch (Exception e) {
-            logger.warn("Unable to access ipstack data");
-        }
+
 
         modelAndView.setViewName("home");
         return modelAndView;

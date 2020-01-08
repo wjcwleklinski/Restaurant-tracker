@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -34,26 +36,29 @@ public class RankingController {
     @GetMapping(path = "/ranking")
     public String ranking(Model model, HttpServletRequest request) {
 
+
         String ip = HttpResponseUtil.getHardcodedIp();
-        try {
-            IpStackData data = ipStackService.getDataByIp(ip);
-            request.getSession().setAttribute("city", data.getCity());
-            request.getSession().setAttribute("country", data.getCountryName());
+        IpStackData data = ipStackService.getIpStackDataByIp(ip);
+        String locationMsg = "We were unable to find you. Please provide your location.";
 
-            CityData hostLocation = zomatoService.getCityDataByLatLon(
-                    String.valueOf(data.getLatitude()), String.valueOf(data.getLongitude()));
+        if (data != null) {
+            locationMsg = data.getCity() + ", " + data.getCountryName();
+            List<BestRatedRestaurant> restaurants = zomatoService.getBestRatedRestaurantsByLatLon(data.getLatitude(),
+                    data.getLongitude());
+            if (restaurants != null) {
+                model.addAttribute("restaurants", restaurants);
+            }
 
-
-            LocationDetails locationDetails =
-                    zomatoService.getLocationDetailsById(String.valueOf(hostLocation.getLocationSuggestions().get(0).getId()));
-
-            List<BestRatedRestaurant> restaurants = locationDetails.getBestRatedRestaurant();
-            model.addAttribute("restaurants", restaurants);
-
-        } catch (Exception e) {
-            logger.warn("Unable to find user's location");
-            e.printStackTrace();
         }
+        request.getSession().setAttribute("location", locationMsg);
+
+
+        return "ranking";
+    }
+
+    @PostMapping(path = "/ranking")
+    public String rankingWithProvidedLocation(@RequestParam String providedLocation, Model model) {
+        logger.info(providedLocation);
 
         return "ranking";
     }

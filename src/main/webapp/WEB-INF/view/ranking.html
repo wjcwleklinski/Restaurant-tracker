@@ -5,6 +5,12 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!--    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.css" >-->
+<!--    <script-->
+<!--            src="https://code.jquery.com/jquery-3.1.1.min.js"-->
+<!--            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="-->
+<!--            crossorigin="anonymous"></script>-->
+<!--    <script src="semantic/dist/semantic.min.js"></script>-->
 </head>
 <body>
 
@@ -13,7 +19,17 @@
     </div>
     <br>
     <br>
-        <h1> Best rated restaurants nearby: [[${session.city}]], [[${session.country}]]</h1>
+        <h1> Best rated restaurants nearby: [[${session.location}]]</h1>
+
+        <form autocomplete="off" action="#" th:action="@{/ranking}"
+              method="post" class="form-horizontal"
+              role="form">
+            <div>
+                <input type="text" placeholder="Different location?" th:value="${providedLocation}" name="providedLocation">
+                <button class="btn btn-primary" type="submit" th:text="Search"/>
+            </div>
+        </form>
+
         <table class="table table-hover">
             <thead class="thead-dark">
                 <tr>

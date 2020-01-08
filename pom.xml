@@ -88,6 +88,13 @@
 			<version>1.9.4</version>
 		</dependency>
 
+<!--		Auto reload functionality-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
 
 	</dependencies>
 

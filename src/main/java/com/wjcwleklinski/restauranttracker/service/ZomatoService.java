@@ -5,6 +5,9 @@ import com.wjcwleklinski.restauranttracker.config.ZomatoConfig;
 import com.wjcwleklinski.restauranttracker.retrofit.resources.zomato.cities.CityData;
 import com.wjcwleklinski.restauranttracker.retrofit.resources.zomato.collections.CollectionsData;
 import com.wjcwleklinski.restauranttracker.retrofit.resources.zomato.location_details.LocationDetails;
+import com.wjcwleklinski.restauranttracker.retrofit.resources.zomato.location_details.best_rated_restaurant.BestRatedRestaurant;
+import com.wjcwleklinski.restauranttracker.retrofit.resources.zomato.location_details.best_rated_restaurant.restaurant.Restaurant;
+import com.wjcwleklinski.restauranttracker.retrofit.resources.zomato.location_details.best_rated_restaurant.restaurant.user_rating.UserRating;
 import okhttp3.OkHttpClient;
 import org.springframework.stereotype.Service;
 import retrofit2.Response;
@@ -12,6 +15,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.io.IOException;
+import java.util.Comparator;
+import java.util.List;
 
 @Service
 public class ZomatoService {
@@ -54,5 +59,20 @@ public class ZomatoService {
 
         Response<CollectionsData> response = zomatoApi.getCollectionsDataByID(cityId, ZomatoConfig.API_KEY).execute();
         return response.body();
+    }
+
+    public List<BestRatedRestaurant> getBestRatedRestaurantsByLatLon(Double latitude, Double longitude) {
+        try {
+            CityData cityData = getCityDataByLatLon(String.valueOf(latitude), String.valueOf(longitude));
+
+            // get first suggestion
+            int cityId = cityData.getLocationSuggestions().get(0).getId();
+
+            LocationDetails locationDetails = getLocationDetailsById(String.valueOf(cityId));
+            return locationDetails.getBestRatedRestaurant();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
