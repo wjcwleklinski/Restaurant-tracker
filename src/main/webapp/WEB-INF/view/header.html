@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
     <head>
-        <title>Registration</title>
+        <title>Restaurant tracker</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -15,8 +15,6 @@
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
                         <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="/home">Restaurant tracker</a>
                 </div>
@@ -25,18 +23,24 @@
                         <li>
                             <a href="#" th:href="@{/home}">Home</a>
                         </li>
-                        <li>
-                            <a href="#" th:href="@{/explore}">Explore</a>
+                        <li sec:authorize="isAuthenticated()">
+                            <a href="#" th:href="@{/favourites}">Favourites</a>
                         </li>
-                        <li>
-                            <a href="#" th:href="@{/ranking}">Best rated</a>
-                        </li>
+
                     </ul>
 
+                    <div id="input-container">
+                        <form class="navbar-form navbar-left" method="post" th:action="@{/ranking}">
+                            <div class="form-group">
+                                <input type="text" id="form-control" placeholder="Where do you want to eat?"
+                                       th:value="${providedLocation}" name="providedLocation">
+                            </div>
+                            <button type="submit" class="btn btn-primary" >Search</button>
+                        </form>
+
+                    </div>
+
                     <ul class="nav navbar-nav navbar-right">
-<!--                        <li sec:authorize="isAuthenticated()">-->
-<!--                            Logged as: <p th:text="${session.loggedUser}"> </p>-->
-<!--                        </li>-->
 
                         <li sec:authorize="isAuthenticated()">
                             <a href="/user" th:href="@{/user}">
@@ -52,7 +56,6 @@
                             <a sec:authorize="isAnonymous()" href="/login" th:href="@{/login}" onclick="$('#form').submit();">
                                 <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;Log in
                             </a>
-<!--                            <form style="visibility: hidden" id="form" method="get" action="#" th:action="@{/logout}"></form>-->
 
                             <a sec:authorize="isAuthenticated()" href="/logout" th:href="@{/logout}" onclick="$('#form').submit();">
                                 <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;Log out
@@ -61,7 +64,10 @@
                         </li>
                     </ul>
                 </div>
+
             </div>
         </div>
+    <br>
+    <br>
     </body>
 </html>
