@@ -21,32 +21,24 @@
     <br>
         <h1> Best rated restaurants nearby: [[${session.location}]]</h1>
 
-        <form autocomplete="off" action="#" th:action="@{/ranking}"
-              method="post" class="form-horizontal"
-              role="form">
-            <div>
-                <input type="text" placeholder="Different location?" th:value="${providedLocation}" name="providedLocation">
-                <button class="btn btn-primary" type="submit" th:text="Search"/>
-            </div>
-        </form>
 
         <table class="table table-hover">
             <thead class="thead-dark">
                 <tr>
-                    <th scope="col">#</th>
                     <th scope="col">Name</th>
                     <th scope="col">Cuisines</th>
                     <th scope="col">Address</th>
                     <th scope="col">Rating</th>
+                    <th scope="col">Favourites</th>
                 </tr>
             </thead>
             <tbody>
             <tr th:each="restaurant, iStat: ${restaurants}">
-                <td th:text="${iStat.index} +1" />
                 <td th:text="${restaurant.getRestaurant().getName()}" />
                 <td th:text="${restaurant.getRestaurant().getCuisines()}" />
                 <td th:text="${restaurant.getRestaurant().getLocation().getAddress()}" />
                 <td th:text="${restaurant.getRestaurant().getUserRating().getAggregateRating()}" />
+                <td> <input type="checkbox"> Add to Favs  <td/>
             </tr>
             </tbody>
         </table>

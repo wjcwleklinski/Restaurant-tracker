@@ -75,4 +75,20 @@ public class ZomatoService {
             return null;
         }
     }
+
+    /**
+     * Method called after post in controller.
+     * Change output to Optional<>
+     */
+    public List<BestRatedRestaurant> getBestRatedRestaurantsByCityName(String cityName) {
+        try {
+            CityData cityData = getCityDataByName(cityName);
+            int cityId = cityData.getLocationSuggestions().get(0).getId();
+            LocationDetails ld = getLocationDetailsById(String.valueOf(cityId));
+            return ld.getBestRatedRestaurant();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

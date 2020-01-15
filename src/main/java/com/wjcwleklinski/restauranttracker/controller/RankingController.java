@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 
 @Controller
@@ -60,6 +61,9 @@ public class RankingController {
     public String rankingWithProvidedLocation(@RequestParam String providedLocation, Model model) {
         logger.info(providedLocation);
 
+        List<BestRatedRestaurant> restaurants = zomatoService.getBestRatedRestaurantsByCityName(providedLocation);
+        model.addAttribute("restaurants", restaurants);
         return "ranking";
     }
+
 }
