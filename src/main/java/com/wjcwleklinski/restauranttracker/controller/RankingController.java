@@ -6,6 +6,7 @@ import com.wjcwleklinski.restauranttracker.retrofit.resources.zomato.cities.Loca
 import com.wjcwleklinski.restauranttracker.retrofit.resources.zomato.location_details.LocationDetails;
 import com.wjcwleklinski.restauranttracker.retrofit.resources.zomato.location_details.best_rated_restaurant.BestRatedRestaurant;
 import com.wjcwleklinski.restauranttracker.service.IpStackService;
+import com.wjcwleklinski.restauranttracker.service.OpenCageService;
 import com.wjcwleklinski.restauranttracker.service.ZomatoService;
 import com.wjcwleklinski.restauranttracker.util.HttpResponseUtil;
 import org.slf4j.Logger;
@@ -31,6 +32,9 @@ public class RankingController {
 
     @Autowired
     private IpStackService ipStackService;
+
+    @Autowired
+    private OpenCageService openCageService;
 
     @Autowired
     private Logger logger;
@@ -61,6 +65,9 @@ public class RankingController {
     @PostMapping(path = "/ranking")
     public String rankingWithProvidedLocation(@RequestParam String providedLocation, Model model) {
         logger.info(providedLocation);
+
+        String latLon = openCageService.getLatLongByCityName(providedLocation);
+        logger.info("Location: " + latLon);
 
         List<BestRatedRestaurant> restaurants = zomatoService.getBestRatedRestaurantsByCityName(providedLocation);
         model.addAttribute("restaurants", restaurants);
