@@ -13,22 +13,7 @@ import java.util.Map;
 
 public interface ZomatoApi {
 
-    @GET("cities")
-    Call<CityData> getCityDataByName(@Query("q") String city, @Query("apikey") String apikey);
 
-    @GET("cities")
-    Call<CityData> getCityDataByLatLon(@Query("lat") String lat, @Query("lon") String lon, @Query("apikey") String apikey);
-
-    @GET("location_details")
-    Call<LocationDetails> getLocationDetailsById(@Query("entity_id") String entityId, @Query("entity_type") String entityType, @Query("apikey") String apikey);
-
-    @GET("collections")
-    Call<CollectionsData> getCollectionsDataByID(@Query("city_id") String cityId, @Query("apikey") String apikey);
-
-    @GET("collections")
-    Call<CollectionsData> getCollectionsDataByLatLon(@Query("lat") String lat, @Query("lon") String lon, @Query("apikey") String apikey);
-
-    //--------------------------------------------
     @GET("search")
     Call<ZomatoSearchResponse> getRestaurantsInRadiusFromLatLon(@Query("apikey") String apikey,
                                                                 @Query("entity_type") String entityType,

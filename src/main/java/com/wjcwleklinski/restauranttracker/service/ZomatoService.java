@@ -35,63 +35,6 @@ public class ZomatoService {
         zomatoApi = retrofit.create(ZomatoApi.class);
     }
 
-    public CityData getCityDataByName(String city) throws IOException {
-
-        Response<CityData> response= zomatoApi.getCityDataByName(city, ZomatoConfig.API_KEY).execute();
-        return response.body();
-    }
-
-    public CityData getCityDataByLatLon(String lat, String lon) throws IOException{
-
-        Response<CityData> response = zomatoApi.getCityDataByLatLon(lat, lon, ZomatoConfig.API_KEY).execute();
-        return response.body();
-    }
-
-    public LocationDetails getLocationDetailsById(String entityId) throws IOException{
-
-        Response<LocationDetails> response = zomatoApi
-                .getLocationDetailsById(entityId, ZomatoConfig.ENTITY_TYPE, ZomatoConfig.API_KEY)
-                .execute();
-
-        return response.body();
-    }
-
-    public CollectionsData getCollectionsDataById(String cityId) throws IOException{
-
-        Response<CollectionsData> response = zomatoApi.getCollectionsDataByID(cityId, ZomatoConfig.API_KEY).execute();
-        return response.body();
-    }
-
-    public List<BestRatedRestaurant> getBestRatedRestaurantsByLatLon(Double latitude, Double longitude) {
-        try {
-            CityData cityData = getCityDataByLatLon(String.valueOf(latitude), String.valueOf(longitude));
-
-            // get first suggestion
-            int cityId = cityData.getLocationSuggestions().get(0).getId();
-
-            LocationDetails locationDetails = getLocationDetailsById(String.valueOf(cityId));
-            return locationDetails.getBestRatedRestaurant();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    /**
-     * Method called after post in controller.
-     * Change output to Optional<>
-     */
-    public List<BestRatedRestaurant> getBestRatedRestaurantsByCityName(String cityName) {
-        try {
-            CityData cityData = getCityDataByName(cityName);
-            int cityId = cityData.getLocationSuggestions().get(0).getId();
-            LocationDetails ld = getLocationDetailsById(String.valueOf(cityId));
-            return ld.getBestRatedRestaurant();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 
     //------------------------------------------------------------------------------------
     private ZomatoSearchResponse getZomatoResponseInRadiusFromLatLon(Map<String, String> queryMap) throws IOException {

@@ -44,23 +44,6 @@ public class RankingController {
     @GetMapping(path = "/ranking")
     public String ranking(Model model, HttpServletRequest request) {
 
-
-        String ip = HttpResponseUtil.getHardcodedIp();
-        IpStackData data = ipStackService.getIpStackDataByIp(ip);
-        String locationMsg = "We were unable to find you. Please provide your location.";
-
-        if (data != null) {
-            locationMsg = data.getCity() + ", " + data.getCountryName();
-            List<BestRatedRestaurant> restaurants = zomatoService.getBestRatedRestaurantsByLatLon(data.getLatitude(),
-                    data.getLongitude());
-            if (restaurants != null) {
-                model.addAttribute("restaurants", restaurants);
-            }
-
-        }
-        request.getSession().setAttribute("location", locationMsg);
-
-
         return "ranking";
     }
 
@@ -78,8 +61,7 @@ public class RankingController {
         logger.info(restaurants2.get(0).getRestaurant().getName() + "  " + restaurants2.size());
 
 
-        List<BestRatedRestaurant> restaurants = zomatoService.getBestRatedRestaurantsByCityName(providedLocation);
-        model.addAttribute("restaurants", restaurants);
+
         return "ranking";
     }
 
