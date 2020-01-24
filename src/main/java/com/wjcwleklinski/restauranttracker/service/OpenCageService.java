@@ -4,6 +4,7 @@ import com.wjcwleklinski.restauranttracker.api.OpenCageApi;
 import com.wjcwleklinski.restauranttracker.config.OpenCageConfig;
 import com.wjcwleklinski.restauranttracker.retrofit.resources.opencage.Geometry;
 import com.wjcwleklinski.restauranttracker.retrofit.resources.opencage.OpenCageResponse;
+import com.wjcwleklinski.restauranttracker.util.LatLon;
 import okhttp3.OkHttpClient;
 import org.springframework.stereotype.Service;
 import retrofit2.Response;
@@ -11,6 +12,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @Service
 public class OpenCageService {
@@ -39,15 +41,18 @@ public class OpenCageService {
         return response.body();
     }
 
-    public String getLatLongByCityName(String cityName) {
-        String result = "";
+    public Optional<LatLon> getLatLongByCityName(String cityName) {
+
+        Optional<LatLon> latLon = Optional.empty();
         try {
             OpenCageResponse response = getAllDataFromApi(cityName);
             Geometry geometryLocation = response.getResults().get(0).getGeometry();
-            result = geometryLocation.getLat() + ", " + geometryLocation.getLng();
+            LatLon location = new LatLon(geometryLocation.getLat(), geometryLocation.getLng());
+            latLon = Optional.ofNullable(location);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return result;
+
+        return latLon;
     }
 }

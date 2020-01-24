@@ -2,11 +2,6 @@ package com.wjcwleklinski.restauranttracker.service;
 
 import com.wjcwleklinski.restauranttracker.api.ZomatoApi;
 import com.wjcwleklinski.restauranttracker.config.ZomatoConfig;
-import com.wjcwleklinski.restauranttracker.retrofit.resources.zomato.cities.CityData;
-import com.wjcwleklinski.restauranttracker.retrofit.resources.zomato.collections.CollectionsData;
-import com.wjcwleklinski.restauranttracker.retrofit.resources.zomato.location_details.LocationDetails;
-import com.wjcwleklinski.restauranttracker.retrofit.resources.zomato.location_details.best_rated_restaurant.BestRatedRestaurant;
-import com.wjcwleklinski.restauranttracker.retrofit.resources.zomato.location_details.best_rated_restaurant.restaurant.user_rating.UserRating;
 import com.wjcwleklinski.restauranttracker.retrofit.resources.zomato.search.Restaurant;
 import com.wjcwleklinski.restauranttracker.retrofit.resources.zomato.search.ZomatoSearchResponse;
 
@@ -36,20 +31,18 @@ public class ZomatoService {
     }
 
 
-    //------------------------------------------------------------------------------------
     private ZomatoSearchResponse getZomatoResponseInRadiusFromLatLon(Map<String, String> queryMap) throws IOException {
 
-        ZomatoSearchResponse response = zomatoApi.getRestaurantsInRadiusFromLatLon(queryMap).execute().body();
-        return response;
+        return zomatoApi.getRestaurantsInRadiusFromLatLon(queryMap).execute().body();
     }
 
-    public List<Restaurant> getRestaurantsInRadiusFromLatLon(String lat, String lon) {
-        List<Restaurant> result = new ArrayList<>();
-        Map<String, String> queryMap = new HashMap<>();
+    public Optional<List<Restaurant>> getRestaurantsInRadiusFromLatLon(String lat, String lon, String start) {
 
+        Optional<List<Restaurant>> result = Optional.empty();
+        Map<String, String> queryMap = new HashMap<>();
         queryMap.put("apikey", ZomatoConfig.API_KEY);
         queryMap.put("entity_type", ZomatoConfig.SEARCH_ENTITY_TYPE);
-        queryMap.put("start", "0");
+        queryMap.put("start", start);
         queryMap.put("count", ZomatoConfig.SEARCH_COUNT);
         queryMap.put("lat", lat);
         queryMap.put("lon", lon);
@@ -59,7 +52,7 @@ public class ZomatoService {
 
         try {
             ZomatoSearchResponse response = getZomatoResponseInRadiusFromLatLon(queryMap);
-            result = response.getRestaurants();
+            result = Optional.ofNullable(response.getRestaurants());
         } catch (Exception e) {
             e.printStackTrace();
         }

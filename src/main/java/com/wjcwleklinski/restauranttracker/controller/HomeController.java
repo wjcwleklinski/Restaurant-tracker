@@ -1,8 +1,6 @@
 package com.wjcwleklinski.restauranttracker.controller;
 
 import com.wjcwleklinski.restauranttracker.entity.User;
-import com.wjcwleklinski.restauranttracker.retrofit.resources.ipstack.IpStackData;
-import com.wjcwleklinski.restauranttracker.service.IpStackService;
 import com.wjcwleklinski.restauranttracker.service.UserService;
 import com.wjcwleklinski.restauranttracker.service.ZomatoService;
 import com.wjcwleklinski.restauranttracker.util.HttpResponseUtil;
@@ -27,9 +25,6 @@ public class HomeController {
 
     @Autowired
     private ZomatoService zomatoService;
-
-    @Autowired
-    private IpStackService ipStackService;
 
 
     @RequestMapping(path = "/home")

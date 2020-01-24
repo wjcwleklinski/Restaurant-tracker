@@ -1,8 +1,5 @@
 package com.wjcwleklinski.restauranttracker.api;
 
-import com.wjcwleklinski.restauranttracker.retrofit.resources.zomato.cities.CityData;
-import com.wjcwleklinski.restauranttracker.retrofit.resources.zomato.collections.CollectionsData;
-import com.wjcwleklinski.restauranttracker.retrofit.resources.zomato.location_details.LocationDetails;
 import com.wjcwleklinski.restauranttracker.retrofit.resources.zomato.search.ZomatoSearchResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
