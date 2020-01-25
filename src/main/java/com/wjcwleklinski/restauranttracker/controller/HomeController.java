@@ -38,8 +38,8 @@ public class HomeController {
         return modelAndView;
     }
 
-    @GetMapping(path = "/dbtest")
-    public @ResponseBody Iterable<User> dbtest() {
-        return userService.findAll();
+    @GetMapping(path = "/header")
+    public String header() {
+        return "header";
     }
 }

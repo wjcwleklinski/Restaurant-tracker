@@ -1,16 +1,12 @@
 <!DOCTYPE html >
-<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <title>Restaurant tracker</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/css/header.css" th:href="@{/css/header.css}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<!--    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.css" >-->
-<!--    <script-->
-<!--            src="https://code.jquery.com/jquery-3.1.1.min.js"-->
-<!--            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="-->
-<!--            crossorigin="anonymous"></script>-->
-<!--    <script src="semantic/dist/semantic.min.js"></script>-->
+
 </head>
 <body>
 
@@ -29,7 +25,7 @@
                     <th scope="col">Cuisines</th>
                     <th scope="col">Address</th>
                     <th scope="col">Rating</th>
-                    <th scope="col">Favourites</th>
+                    <th sec:authorize="isAuthenticated()" scope="col">Favourites</th>
                 </tr>
             </thead>
             <tbody>
@@ -37,8 +33,8 @@
                 <td th:text="${restaurant.getRestaurant().getName()}" />
                 <td th:text="${restaurant.getRestaurant().getCuisines()}" />
                 <td th:text="${restaurant.getRestaurant().getLocation().getAddress()}" />
-                <td th:text="${restaurant.getRestaurant().getUserRating().getAggregateRating()}" />
-                <td> <input type="checkbox"> Add to Favs  <td/>
+                <td th:text="${restaurant.getRestaurant().getUserRating().getAggregateRating()}"></td>
+                <td sec:authorize="isAuthenticated()"> <input type="checkbox"> Add to Favs  <td/>
             </tr>
             </tbody>
         </table>
