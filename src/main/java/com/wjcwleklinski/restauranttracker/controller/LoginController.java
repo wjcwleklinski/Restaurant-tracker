@@ -15,14 +15,14 @@ import java.security.Principal;
 public class LoginController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    Logger logger;
+    private Logger logger;
 
     @GetMapping(path = "/login")
     public String login() {
-        logger.info("Get");
+        //logger.info("Get");
 
         return "login";
     }
